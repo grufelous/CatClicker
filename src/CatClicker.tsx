@@ -1,20 +1,20 @@
 import React, {useState, useCallback} from 'react'
 
-const Btn = (props: {action: () => void, children: string}) => {
+const Btn = React.memo((props: {action: () => void, children: string}) => {
     console.log('Rendering button')
     return (
         <button onClick={ () => {props.action()} }>
             {props.children}
         </button>
     )
-}
+})
 
 const Clicker = (props: {count: number, incCount: () => void, children?: any}) => {
     console.log('Rendering clicker')
     return (
         <div>
             <p>{props.count}</p>
-            <Btn action={ () => { props.incCount() } }>Click Me</Btn>
+            <Btn action={ props.incCount }>Click Me</Btn>
         </div>
     )
 }
@@ -23,19 +23,19 @@ const Image = (props: {src: string, onClickFn: () => void }) => {
     console.log('Rendering image')
     return (
         <>
-            <img src={ props.src } onClick={ () => {props.onClickFn()} }></img>
+            <img src={ props.src } onClick={ props.onClickFn }></img>
         </>
     )
 }
 
-const Cat = (props: {incCount: () => void, setCount?: Function, text?: string}) => {
+const Cat = React.memo((props: {incCount: () => void, setCount?: Function}) => {
     console.log('Rendering cat')
     return (
         <>
-            <Image src="https://cataas.com/cat" onClickFn={ () => { props.incCount() }}></Image>
+            <Image src="https://cataas.com/cat" onClickFn={ props.incCount }></Image>
         </>
     )
-}
+})
 
 const CatClicker = (props: {}) => {
     const [count, setCount] = useState(0)
